@@ -2,3 +2,4 @@ venv/
 pyproject.toml
 .pytest_cache
 rabbitmq-data/
+db.sqlite3
