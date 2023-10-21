@@ -2,4 +2,5 @@ venv/
 pyproject.toml
 .pytest_cache
 rabbitmq-data/
-logs/
+logs/celery.log
+logs/myapp.log
