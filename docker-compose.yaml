@@ -1,0 +1,69 @@
+version: '3.4'
+services:
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # Порт для веб-консоли RabbitMQ
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - ./rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - mynetwork
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A service_mailings worker --logfile=./logs/myapp.log
+    restart: unless-stopped
+    links:
+      - rabbitmq
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/service_mailings
+    networks:
+      - mynetwork
+
+  flower:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: flower
+    entrypoint: celery
+    command: -A service_mailings flower
+    links:
+      - rabbitmq
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/service_mailings
+    networks:
+      - mynetwork
+    ports:
+      - "5555:5555"
+
+
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py loaddata api/fixtures/001_users.json api/fixtures/002_tag.json api/fixtures/003_operator_code.json api/fixtures/004_timezone.json api/fixtures/005_client.json && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    links:
+      - rabbitmq
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/service_mailings
+    networks:
+      - mynetwork
+
+
+networks:
+  mynetwork:
+    driver: bridge

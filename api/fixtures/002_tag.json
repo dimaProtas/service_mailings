@@ -1,0 +1,1 @@
+[{"model": "api.tag", "pk": 1, "fields": {"name": "news"}}, {"model": "api.tag", "pk": 2, "fields": {"name": "sport"}}, {"model": "api.tag", "pk": 3, "fields": {"name": "fooball"}}, {"model": "api.tag", "pk": 4, "fields": {"name": "history"}}]

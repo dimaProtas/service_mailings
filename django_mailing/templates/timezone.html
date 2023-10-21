@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+    <h2>Тайм зона</h2>
+    <div style="display: flex;justify-content: space-around;">
+
+        <div style="display: flex;width: 50%; flex-wrap: wrap;">
+
+            {% for t in timezone %}
+                <div style="display: flex;align-items: center;margin: 10px;border: solid 1px; padding: 5px;max-width: 50%;;height: 25%; text-align: center;background-color: blueviolet;">
+                    <p>
+                        <span>{{ t.name }}</span><span>({{ t.timezone }})</span>
+                    </p>
+                    <form style="margin-left: 10px;" method="post" action="{% url 'timezone_delete' timezone_id=t.id %}">
+                        {% csrf_token %}
+                        <button type="submit"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            <h2>Добавить тайм зону</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

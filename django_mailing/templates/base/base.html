@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple blog</title>
+    <link rel="icon" href="/media/unnamed.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="/media/unnamed.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+</head>
+<body>
+<nav>
+<div style="display: flex; justify-content: space-between;">
+    <div>
+        <a style="margin-left: 15px;" href="{% url 'index' %}">Главная</a>
+        {% if user.is_authenticated %}
+            <a style="margin-left: 15px;" href="{% url 'client' %}">Клиенты</a>
+            <a style="margin-left: 15px;" href="{% url 'mailing_list' %}">Рассылки</a>
+            <a style="margin-left: 15px;" href="{% url 'tags' %}">Таги</a>
+            <a style="margin-left: 15px;" href="{% url 'operator_cods' %}">Код оператора</a>
+            <a style="margin-left: 15px;" href="{% url 'timezone' %}">Тайм зона</a>
+            <a style="margin-left: 15px;" href="{% url 'messages' %}">Статистика</a>
+            <a style="margin-left: 15px;" href="/api/">API</a>
+        {% endif %}
+    </div>
+    <div style="margin-right: 10px;">
+        {% if user.is_authenticated %}
+            <span>{{ user.username }}</span>
+            <a style="margin-left: 15px;" href="{% url 'logout' %}">Выйти</a>
+        {% else %}
+            <a style="margin-left: 15px;" href="{% url 'login' %}">Войти</a>
+            <a style="margin-left: 15px;" href="{% url 'register' %}">Регистрация</a>
+        {% endif %}
+    </div>
+</div>
+</nav>
+  {% block content %}
+  {% endblock %}
+</body>
+</html>
+

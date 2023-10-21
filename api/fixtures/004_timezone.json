@@ -1,0 +1,1 @@
+[{"model": "api.timezonemodel", "pk": 1, "fields": {"name": "Москва", "timezone": "UTC+3"}}, {"model": "api.timezonemodel", "pk": 2, "fields": {"name": "Екатеренбург", "timezone": "UTC+5"}}, {"model": "api.timezonemodel", "pk": 3, "fields": {"name": "Омск", "timezone": "UTC+7"}}, {"model": "api.timezonemodel", "pk": 4, "fields": {"name": "Иркутск", "timezone": "UTC+8"}}]

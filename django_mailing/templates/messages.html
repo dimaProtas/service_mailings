@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+    <h1>Статистика</h1>
+    {% for m in messages %}
+        <div style="background-color: chartreuse;border: solid 1px;width: 40%;padding: 0px 10px;">
+            <p>Время выполнения: {{ m.creation_datetime }}</p>
+            <p>Статус:
+                {% if m.status == 1 %}
+                    Отправлено
+                {% elif m.staus == 2  %}
+                    Ожидает отправки
+                {% else %}
+                    Не отправлено!
+                {% endif %}
+            </p>
+            <p>Сообщение: {{ m.mailing_list }}</p>
+            <p>Клиент: {{ m.client }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

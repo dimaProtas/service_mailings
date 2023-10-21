@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+
+
+{% block content %}
+<h2>Вход</h2>
+{% if user.is_authenticated %}
+<p>Вы уже выполнили вход.</p>
+{% else %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Войти</button>
+    <a href="{% url 'login_github' %}" class="white">
+        Авторизоваться через GitHub
+    </a>
+</form>
+{% endif %}
+{% endblock %}

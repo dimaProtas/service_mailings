@@ -1,0 +1,5 @@
+venv/
+pyproject.toml
+.pytest_cache
+rabbitmq-data/
+logs/

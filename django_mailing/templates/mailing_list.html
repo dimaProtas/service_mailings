@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+
+    <div style="display: flex; justify-content: space-around;">
+    <div>
+    {% for mailing in mailings %}
+            <h1>Рассылки</h1>
+            <li style="border: solid 1px; background-color: palevioletred; margin: 10px;">
+                <ul>Начало: {{ mailing.start_datetime }}</ul>
+                <ul>Конец: {{ mailing.end_datetime }}</ul>
+                <ul>Сообщение: {{ mailing.message }}</ul>
+                <ul>Оператор:{{ mailing.operator_code }}</ul>
+                <ul>Таг:
+                    {% for tag in mailing.tags.all %}
+                        {{ tag.name }}
+                    {% endfor %}
+                </ul>
+                <div style="display: flex;">
+                    <form method="post" action="{% url 'delete_mailing' mailing_id=mailing.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Удалить рассылку</button>
+                </form>
+{#                <form method="post" action="{% url 'start' %}">#}
+{#                    {% csrf_token %}#}
+{#                    <button type="submit">Запустить рассылку</button>#}
+{#                </form>#}
+                </div>
+
+            <a href="{% url 'edit_mailing' pk=mailing.id %}">Изменить</a>
+            </li>
+    {% endfor %}
+     </div>
+            <div>
+                <h2>Создать рассылку</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Добавить рассылку</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
